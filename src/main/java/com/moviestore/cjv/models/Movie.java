@@ -1,30 +1,30 @@
 package com.moviestore.cjv.models;
 
-//import org.springframework.data.annotation.Id;
-//import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 
-//@Document("movies")
+@Document("movies")
 public class Movie {
-//    @Id
-    private Long id;
+    @Id
+    private String id;
     private String name;
     private String genre;
 
     public Movie() {
     }
 
-    public Movie(Long id, String name, String genre) {
+    public Movie(String id, String name, String genre) {
         this.id = id;
         this.name = name;
         this.genre = genre;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
