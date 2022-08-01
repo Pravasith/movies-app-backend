@@ -1,7 +1,7 @@
 package com.moviestore.cjv.services;
 
-import com.moviestore.cjv.models.Backdrop;
-import com.moviestore.cjv.models.BackdropRepository;
+import com.moviestore.cjv.models.backdrops.Backdrop;
+import com.moviestore.cjv.models.backdrops.BackdropRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

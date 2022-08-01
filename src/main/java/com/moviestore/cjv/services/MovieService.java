@@ -1,7 +1,7 @@
 package com.moviestore.cjv.services;
 
-import com.moviestore.cjv.models.Movie;
-import com.moviestore.cjv.models.MovieRepository;
+import com.moviestore.cjv.models.movies.Movie;
+import com.moviestore.cjv.models.movies.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

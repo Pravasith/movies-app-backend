@@ -1,4 +1,4 @@
-package com.moviestore.cjv.models;
+package com.moviestore.cjv.models.movies;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;

@@ -1,8 +1,8 @@
-package com.moviestore.cjv.models;
+package com.moviestore.cjv.models.users;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface BackdropRepository extends MongoRepository<Backdrop, String> {
+public interface UserRepository extends MongoRepository<User, String> {
 }

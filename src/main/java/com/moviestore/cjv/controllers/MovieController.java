@@ -1,9 +1,11 @@
 package com.moviestore.cjv.controllers;
 
-import com.moviestore.cjv.models.Movie;
+import com.moviestore.cjv.models.movies.Movie;
 import com.moviestore.cjv.services.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,23 +17,23 @@ public class MovieController {
     private MovieService movieService;
 
     @GetMapping("/movies")
-    public List<Movie> getMovies(){
+    public ResponseEntity<List<Movie>> getMovies(){
         List<Movie> movies = movieService.getMovies();
-        System.out.println(movies.toString());
-        return  movies;
+        return new ResponseEntity(movies, HttpStatus.OK);
     }
 
     @PostMapping(
-            value = "/movies",
-            consumes = { MediaType.APPLICATION_JSON_VALUE }
+        value = "/movies",
+        consumes = { MediaType.APPLICATION_JSON_VALUE }
     )
-    public void addMovie(@RequestBody() Movie movie) {
-            movieService.addMovie(movie);
+    public ResponseEntity<Movie> addMovie(@RequestBody() Movie movie) {
+        movieService.addMovie(movie);
+        return new ResponseEntity<Movie>(movie, HttpStatus.CREATED);
     }
 
     @PostMapping(
-            value = "/all-movies",
-            consumes = { MediaType.APPLICATION_JSON_VALUE }
+        value = "/all-movies",
+        consumes = { MediaType.APPLICATION_JSON_VALUE }
     )
     public void addMovies(@RequestBody() Movie[] movies) {
         movieService.addMovies(movies);

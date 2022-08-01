@@ -1,4 +1,4 @@
-package com.moviestore.cjv.models;
+package com.moviestore.cjv.models.backdrops;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

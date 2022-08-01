@@ -1,6 +1,6 @@
 package com.moviestore.cjv.controllers;
 
-import com.moviestore.cjv.models.Backdrop;
+import com.moviestore.cjv.models.backdrops.Backdrop;
 import com.moviestore.cjv.services.BackdropService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
