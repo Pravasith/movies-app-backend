@@ -16,7 +16,9 @@ public class MovieController {
 
     @GetMapping("/movies")
     public List<Movie> getMovies(){
-       return  movieService.getMovies();
+        List<Movie> movies = movieService.getMovies();
+        System.out.println(movies.toString());
+        return  movies;
     }
 
     @PostMapping(
@@ -25,5 +27,13 @@ public class MovieController {
     )
     public void addMovie(@RequestBody() Movie movie) {
             movieService.addMovie(movie);
+    }
+
+    @PostMapping(
+            value = "/all-movies",
+            consumes = { MediaType.APPLICATION_JSON_VALUE }
+    )
+    public void addMovies(@RequestBody() Movie[] movies) {
+        movieService.addMovies(movies);
     }
 }
