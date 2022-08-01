@@ -5,6 +5,7 @@ import com.moviestore.cjv.models.BackdropRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -17,8 +18,10 @@ public class BackdropService {
         return backdropRepository.findAll();
     }
 
+
     public void addBackdrop(Backdrop backdrop) {
         backdropRepository.insert(backdrop);
     }
 
+    public void addAllBackdrops (Backdrop[] backdrops) { backdropRepository.saveAll(Arrays.stream(backdrops).toList()); }
 }

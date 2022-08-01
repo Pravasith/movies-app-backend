@@ -23,4 +23,7 @@ public class BackdropController {
     public void addBackdrop(@RequestBody Backdrop backdrop) {
         backdropService.addBackdrop(backdrop);
     }
+
+    @PostMapping(value = "/all-backdrops", consumes = { MediaType.APPLICATION_JSON_VALUE })
+    public  void addAllBackdrops(@RequestBody Backdrop[] backdrops) { backdropService.addAllBackdrops(backdrops); }
 }
