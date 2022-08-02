@@ -28,6 +28,26 @@ public class MediaController
         );
     }
 
+    @GetMapping("/media/movies")
+    public ResponseEntity<CustomizedResponse<List<Media>>> getMovies()
+    {
+        List<Media> media = mediaService.getMediaByType("movie");
+        return new ResponseEntity<>(
+                new CustomizedResponse<>("200: All movies fetched successfully", media),
+                HttpStatus.OK
+        );
+    }
+
+    @GetMapping("/media/tv-shows")
+    public ResponseEntity<CustomizedResponse<List<Media>>> getTVShows()
+    {
+        List<Media> media = mediaService.getMediaByType("tv-series");
+        return new ResponseEntity<>(
+                new CustomizedResponse<>("200: All TV-shows fetched successfully", media),
+                HttpStatus.OK
+        );
+    }
+
     @PostMapping(
         value = "/media",
         consumes = { MediaType.APPLICATION_JSON_VALUE }
