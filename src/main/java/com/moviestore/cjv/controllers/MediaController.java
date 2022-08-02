@@ -18,15 +18,7 @@ public class MediaController
     @Autowired
     private MediaService mediaService;
 
-    @GetMapping("/media")
-    public ResponseEntity<CustomizedResponse<List<Media>>> getAllMedia()
-    {
-        List<Media> media = mediaService.getAllMedia();
-        return new ResponseEntity<>(
-                new CustomizedResponse<>("200: All media fetched successfully", media),
-                HttpStatus.OK
-        );
-    }
+
 
     @GetMapping("/media/movies")
     public ResponseEntity<CustomizedResponse<List<Media>>> getMovies()
@@ -44,6 +36,30 @@ public class MediaController
         List<Media> media = mediaService.getMediaByType("tv-series");
         return new ResponseEntity<>(
                 new CustomizedResponse<>("200: All TV-shows fetched successfully", media),
+                HttpStatus.OK
+        );
+    }
+
+    @GetMapping("/media")
+    public ResponseEntity<CustomizedResponse<List<Media>>> getMediaHavingName (
+            @RequestParam (
+                value = "name",
+                defaultValue = "empty"
+            )
+            String name
+    )
+    {
+        if(name.equals("empty")) {
+            List<Media> media = mediaService.getAllMedia();
+            return new ResponseEntity<>(
+                    new CustomizedResponse<>("200: All media fetched successfully", media),
+                    HttpStatus.OK
+            );
+        }
+
+        List<Media> media = mediaService.getMediaHavingName(name);
+        return new ResponseEntity<>(
+                new CustomizedResponse<>("200: Movies/TV-Shows having name " + name + " fetched successfully", media),
                 HttpStatus.OK
         );
     }

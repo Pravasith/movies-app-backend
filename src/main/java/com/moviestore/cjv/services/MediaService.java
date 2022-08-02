@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MediaService {
@@ -36,6 +37,17 @@ public class MediaService {
     {
         Query query = new Query();
         query.addCriteria(Criteria.where("mediaType").is(mediaType));
+
+        List<Media> media = mongoTemplate.find(query, Media.class);
+
+        return media;
+    }
+
+    public List<Media> getMediaHavingName(String name)
+    {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("name").regex(".*" + name + ".*", "i"));
+
 
         List<Media> media = mongoTemplate.find(query, Media.class);
 
