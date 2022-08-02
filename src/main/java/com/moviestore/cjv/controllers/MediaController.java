@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/api/v1")
@@ -38,25 +39,18 @@ public class MediaController
         );
     }
 
-    @GetMapping("/media/movies/featured")
-    public ResponseEntity<CustomizedResponse<List<Media>>> getFeaturedMovies()
+    @GetMapping("/media/featured")
+    public ResponseEntity<CustomizedResponse<List<Media>>> getFeaturedMovies(@RequestParam("type") String mediaType)
     {
-        List<Media> media = mediaService.getFeaturedMediaByType("movie");
+        List<Media> media = mediaService.getFeaturedMediaByType(mediaType);
+
         return new ResponseEntity<>(
                 new CustomizedResponse<>("200: All movies fetched successfully", media),
                 HttpStatus.OK
         );
     }
 
-    @GetMapping("/media/tv-shows/featured")
-    public ResponseEntity<CustomizedResponse<List<Media>>> getFeaturedTVShows()
-    {
-        List<Media> media = mediaService.getFeaturedMediaByType("tv-series");
-        return new ResponseEntity<>(
-                new CustomizedResponse<>("200: All TV-shows fetched successfully", media),
-                HttpStatus.OK
-        );
-    }
+
 
     @GetMapping("/media")
     public ResponseEntity<CustomizedResponse<List<Media>>> getMediaHavingName (
@@ -78,6 +72,30 @@ public class MediaController
         List<Media> media = mediaService.getMediaHavingName(name);
         return new ResponseEntity<>(
                 new CustomizedResponse<>("200: Movies/TV-Shows having name " + name + " fetched successfully", media),
+                HttpStatus.OK
+        );
+    }
+
+    @GetMapping("/media/{id}")
+    ResponseEntity<CustomizedResponse<Optional<Media>>> getMediaById(@PathVariable String id)
+    {
+        CustomizedResponse<Optional<Media>> customizedResponse = null;
+
+        try
+        {
+            customizedResponse = new CustomizedResponse<>("200: Fetched Media successfully", mediaService.getMediaById(id));
+        }
+        catch (Exception e)
+        {
+            customizedResponse = new CustomizedResponse<>("404: " + e.getMessage(), null);
+            return new ResponseEntity<>(
+                    customizedResponse,
+                    HttpStatus.NOT_FOUND
+            );
+        }
+
+        return new ResponseEntity<>(
+                customizedResponse,
                 HttpStatus.OK
         );
     }
@@ -105,6 +123,36 @@ public class MediaController
         return new ResponseEntity<>(
                 new CustomizedResponse<>("201: Added all media successfully", media),
                 HttpStatus.CREATED
+        );
+    }
+
+    @PutMapping(
+        value = "/media/{id}",
+        consumes = { MediaType.APPLICATION_JSON_VALUE }
+    )
+    public ResponseEntity<CustomizedResponse<Media>> updateMediaById(
+            @PathVariable("id") String id,
+            @RequestBody() Media media
+    )
+    {
+        CustomizedResponse<Media> customizedResponse = null;
+
+        try
+        {
+            customizedResponse = new CustomizedResponse<>("200: Media updated successfully", mediaService.updateMediaById(id, media));
+        }
+        catch (Exception e)
+        {
+            customizedResponse = new CustomizedResponse<>("400: " + e.getMessage(), null);
+            return new ResponseEntity<>(
+                    customizedResponse,
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+
+        return new ResponseEntity<>(
+                customizedResponse,
+                HttpStatus.OK
         );
     }
 }
