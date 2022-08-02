@@ -2,6 +2,7 @@ package com.moviestore.cjv.controllers;
 
 import com.moviestore.cjv.models.movies.Movie;
 import com.moviestore.cjv.services.MovieService;
+import com.moviestore.cjv.utils.CustomizedResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,25 +18,35 @@ public class MovieController {
     private MovieService movieService;
 
     @GetMapping("/movies")
-    public ResponseEntity<List<Movie>> getMovies(){
+    public ResponseEntity<CustomizedResponse<List<Movie>>> getMovies(){
         List<Movie> movies = movieService.getMovies();
-        return new ResponseEntity(movies, HttpStatus.OK);
+        return new ResponseEntity<>(
+                new CustomizedResponse<>("200: Movies fetched successfully", movies),
+                HttpStatus.OK
+        );
     }
 
     @PostMapping(
         value = "/movies",
         consumes = { MediaType.APPLICATION_JSON_VALUE }
     )
-    public ResponseEntity<Movie> addMovie(@RequestBody() Movie movie) {
+    public ResponseEntity<CustomizedResponse<Movie>> addMovie(@RequestBody() Movie movie) {
         movieService.addMovie(movie);
-        return new ResponseEntity<Movie>(movie, HttpStatus.CREATED);
+        return new ResponseEntity<>(
+                new CustomizedResponse<>("201: Movie added successfully", movie),
+                HttpStatus.CREATED
+        );
     }
 
     @PostMapping(
         value = "/all-movies",
         consumes = { MediaType.APPLICATION_JSON_VALUE }
     )
-    public void addMovies(@RequestBody() Movie[] movies) {
+    public ResponseEntity<CustomizedResponse<Movie[]>> addMovies(@RequestBody() Movie[] movies) {
         movieService.addMovies(movies);
+        return new ResponseEntity<>(
+                new CustomizedResponse<>("201: Added movies successfully", movies),
+                HttpStatus.CREATED
+        );
     }
 }
