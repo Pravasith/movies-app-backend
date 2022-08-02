@@ -18,8 +18,6 @@ public class MediaController
     @Autowired
     private MediaService mediaService;
 
-
-
     @GetMapping("/media/movies")
     public ResponseEntity<CustomizedResponse<List<Media>>> getMovies()
     {
@@ -34,6 +32,26 @@ public class MediaController
     public ResponseEntity<CustomizedResponse<List<Media>>> getTVShows()
     {
         List<Media> media = mediaService.getMediaByType("tv-series");
+        return new ResponseEntity<>(
+                new CustomizedResponse<>("200: All TV-shows fetched successfully", media),
+                HttpStatus.OK
+        );
+    }
+
+    @GetMapping("/media/movies/featured")
+    public ResponseEntity<CustomizedResponse<List<Media>>> getFeaturedMovies()
+    {
+        List<Media> media = mediaService.getFeaturedMediaByType("movie");
+        return new ResponseEntity<>(
+                new CustomizedResponse<>("200: All movies fetched successfully", media),
+                HttpStatus.OK
+        );
+    }
+
+    @GetMapping("/media/tv-shows/featured")
+    public ResponseEntity<CustomizedResponse<List<Media>>> getFeaturedTVShows()
+    {
+        List<Media> media = mediaService.getFeaturedMediaByType("tv-series");
         return new ResponseEntity<>(
                 new CustomizedResponse<>("200: All TV-shows fetched successfully", media),
                 HttpStatus.OK

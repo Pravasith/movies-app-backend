@@ -36,9 +36,29 @@ public class MediaService {
     public List<Media> getMediaByType (String mediaType)
     {
         Query query = new Query();
-        query.addCriteria(Criteria.where("mediaType").is(mediaType));
+        query.addCriteria(
+            Criteria
+                .where("mediaType")
+                .is(mediaType)
+        );
 
-        List<Media> media = mongoTemplate.find(query, Media.class);
+        final List<Media> media = mongoTemplate.find(query, Media.class);
+
+        return media;
+    }
+
+    public List<Media> getFeaturedMediaByType (String mediaType)
+    {
+        Query query = new Query();
+        query.addCriteria(
+            Criteria
+                .where("mediaType")
+                .is(mediaType)
+                .and("isFeatured")
+                .is(true)
+        );
+
+        final List<Media> media = mongoTemplate.find(query, Media.class);
 
         return media;
     }
@@ -46,10 +66,13 @@ public class MediaService {
     public List<Media> getMediaHavingName(String name)
     {
         Query query = new Query();
-        query.addCriteria(Criteria.where("name").regex(".*" + name + ".*", "i"));
+        query.addCriteria(
+            Criteria
+                .where("name")
+                .regex(".*" + name + ".*", "i")
+        );
 
-
-        List<Media> media = mongoTemplate.find(query, Media.class);
+        final List<Media> media = mongoTemplate.find(query, Media.class);
 
         return media;
     }

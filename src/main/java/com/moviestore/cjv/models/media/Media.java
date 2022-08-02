@@ -120,12 +120,12 @@ public class Media {
         this.purchasePrice = purchasePrice;
     }
 
-    public boolean isFeatured() {
+    public boolean getIsFeatured() {
         return isFeatured;
     }
 
-    public void setFeatured(boolean featured) {
-        isFeatured = featured;
+    public void setIsFeatured(boolean isFeatured) {
+        this.isFeatured = isFeatured;
     }
 
     public String getSlug() {
