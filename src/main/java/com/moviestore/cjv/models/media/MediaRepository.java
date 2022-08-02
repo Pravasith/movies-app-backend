@@ -1,9 +1,9 @@
-package com.moviestore.cjv.models.movies;
+package com.moviestore.cjv.models.media;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MovieRepository extends MongoRepository<Movie, String> {
+public interface MediaRepository extends MongoRepository<Media, String> {
 
 }
