@@ -155,4 +155,30 @@ public class MediaController
                 HttpStatus.OK
         );
     }
+
+    @DeleteMapping(
+            value = "/media/{id}"
+    )
+    public ResponseEntity<CustomizedResponse<Media>> deleteMediaById( @PathVariable("id") String id )
+    {
+        CustomizedResponse<Media> customizedResponse = null;
+
+        try
+        {
+            customizedResponse = new CustomizedResponse<>("200: Media deleted successfully", mediaService.deleteMediaById(id));
+        }
+        catch (Exception e)
+        {
+            customizedResponse = new CustomizedResponse<>("400: " + e.getMessage(), null);
+            return new ResponseEntity<>(
+                    customizedResponse,
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+
+        return new ResponseEntity<>(
+                customizedResponse,
+                HttpStatus.OK
+        );
+    }
 }

@@ -134,4 +134,17 @@ public class MediaService {
 
         return savedMedia;
     }
+
+    public Media deleteMediaById(String id) throws Exception
+    {
+        Optional<Media> media = mediaRepository.findById(id);
+
+        if(!media.isPresent()) {
+            throw new Exception("Media with Id: " + id + " not found");
+        }
+
+        mediaRepository.delete(media.get());
+
+        return media.get();
+    }
 }
