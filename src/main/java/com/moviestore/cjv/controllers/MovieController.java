@@ -13,12 +13,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/v1")
-public class MovieController {
+public class MovieController
+{
     @Autowired
     private MovieService movieService;
 
     @GetMapping("/movies")
-    public ResponseEntity<CustomizedResponse<List<Movie>>> getMovies(){
+    public ResponseEntity<CustomizedResponse<List<Movie>>> getMovies()
+    {
         List<Movie> movies = movieService.getMovies();
         return new ResponseEntity<>(
                 new CustomizedResponse<>("200: Movies fetched successfully", movies),
@@ -30,7 +32,8 @@ public class MovieController {
         value = "/movies",
         consumes = { MediaType.APPLICATION_JSON_VALUE }
     )
-    public ResponseEntity<CustomizedResponse<Movie>> addMovie(@RequestBody() Movie movie) {
+    public ResponseEntity<CustomizedResponse<Movie>> addMovie(@RequestBody() Movie movie)
+    {
         movieService.addMovie(movie);
         return new ResponseEntity<>(
                 new CustomizedResponse<>("201: Movie added successfully", movie),
@@ -42,7 +45,8 @@ public class MovieController {
         value = "/all-movies",
         consumes = { MediaType.APPLICATION_JSON_VALUE }
     )
-    public ResponseEntity<CustomizedResponse<Movie[]>> addMovies(@RequestBody() Movie[] movies) {
+    public ResponseEntity<CustomizedResponse<Movie[]>> addMovies(@RequestBody() Movie[] movies)
+    {
         movieService.addMovies(movies);
         return new ResponseEntity<>(
                 new CustomizedResponse<>("201: Added movies successfully", movies),

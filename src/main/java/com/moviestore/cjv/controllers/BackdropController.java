@@ -13,12 +13,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/v1")
-public class BackdropController {
+public class BackdropController
+{
     @Autowired
     private BackdropService backdropService;
 
     @GetMapping("/backdrops")
-    public ResponseEntity<CustomizedResponse<List<Backdrop>>> getBackdrops() {
+    public ResponseEntity<CustomizedResponse<List<Backdrop>>> getBackdrops()
+    {
         return new ResponseEntity<>(
                 new CustomizedResponse<>("200: Fetched backdrops successfully", backdropService.getBackdrops()),
                 HttpStatus.OK
@@ -26,7 +28,8 @@ public class BackdropController {
     }
 
     @PostMapping(value = "/backdrops", consumes = { MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<CustomizedResponse<Backdrop>> addBackdrop(@RequestBody Backdrop backdrop) {
+    public ResponseEntity<CustomizedResponse<Backdrop>> addBackdrop(@RequestBody Backdrop backdrop)
+    {
         backdropService.addBackdrop(backdrop);
 
         return new ResponseEntity<>(
@@ -36,7 +39,8 @@ public class BackdropController {
     }
 
     @PostMapping(value = "/all-backdrops", consumes = { MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<CustomizedResponse<Backdrop[]>> addAllBackdrops(@RequestBody Backdrop[] backdrops) {
+    public ResponseEntity<CustomizedResponse<Backdrop[]>> addAllBackdrops(@RequestBody Backdrop[] backdrops)
+    {
         backdropService.addAllBackdrops(backdrops);
         return new ResponseEntity<>(
                 new CustomizedResponse<>("201: Added backdrops successfully", backdrops),
