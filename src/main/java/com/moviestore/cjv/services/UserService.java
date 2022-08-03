@@ -1,29 +1,35 @@
 package com.moviestore.cjv.services;
 
-import com.mongodb.MongoException;
-import com.mongodb.MongoQueryException;
-import com.moviestore.cjv.models.users.User;
+
+import com.moviestore.cjv.models.users.UserModel;
 import com.moviestore.cjv.models.users.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserService
+public class UserService implements UserDetailsService
 {
     @Autowired
     private UserRepository userRepository;
 
-    public List<User> getUsers()
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    public List<UserModel> getUsers()
     {
         return userRepository.findAll();
     }
 
-    public Optional<User> getUser(String id) throws Exception
+    public Optional<UserModel> getUser(String id) throws Exception
     {
-        Optional<User> user = userRepository.findById(id);
+        Optional<UserModel> user = userRepository.findById(id);
 
         if(!user.isPresent()) {
             throw new Exception("User with Id: " + id + " not found");
@@ -32,7 +38,16 @@ public class UserService
         return user;
     }
 
-    public User addUser(User user) {
+    public UserModel addUser(UserModel user) {
+        String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
+
         return userRepository.insert(user);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
+    {
+        return null;
     }
 }

@@ -1,7 +1,7 @@
 package com.moviestore.cjv.controllers;
 
 
-import com.moviestore.cjv.models.users.User;
+import com.moviestore.cjv.models.users.UserModel;
 import com.moviestore.cjv.services.UserService;
 import com.moviestore.cjv.utils.CustomizedResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class UserController
     private UserService userService;
 
     @GetMapping("/users")
-    ResponseEntity<CustomizedResponse<List<User>>> getUsers()
+    ResponseEntity<CustomizedResponse<List<UserModel>>> getUsers()
     {
         return new ResponseEntity<>(
                 new CustomizedResponse<>("200: Fetched Users successfully" ,userService.getUsers()),
@@ -30,9 +30,9 @@ public class UserController
     }
 
     @GetMapping("/users/{id}")
-    ResponseEntity<CustomizedResponse<Optional<User>>> getUser(@PathVariable String id)
+    ResponseEntity<CustomizedResponse<Optional<UserModel>>> getUser(@PathVariable String id)
     {
-        CustomizedResponse<Optional<User>> customizedResponse = null;
+        CustomizedResponse<Optional<UserModel>> customizedResponse = null;
 
         try
         {
@@ -57,11 +57,11 @@ public class UserController
         value = "/users",
         consumes = { MediaType.APPLICATION_JSON_VALUE }
     )
-    ResponseEntity<CustomizedResponse<User>> addUser(@RequestBody User user)
+    ResponseEntity<CustomizedResponse<UserModel>> addUser(@RequestBody UserModel userModel)
     {
-        userService.addUser(user);
+        userService.addUser(userModel);
         return new ResponseEntity<>(
-                new CustomizedResponse<>("201: User added successfully", user),
+                new CustomizedResponse<>("201: User added successfully", userModel),
                 HttpStatus.CREATED
         );
     }
