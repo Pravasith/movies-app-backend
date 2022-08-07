@@ -2,7 +2,6 @@ package com.moviestore.cjv.services;
 
 import com.moviestore.cjv.models.media.Media;
 import com.moviestore.cjv.models.media.MediaRepository;
-import com.moviestore.cjv.models.users.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
