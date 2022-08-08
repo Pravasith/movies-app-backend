@@ -82,7 +82,7 @@ public class UserController
         }
         catch (Exception e)
         {
-            customizedResponse = new CustomizedResponse<>("401: " + e.getMessage(), null);
+            customizedResponse = new CustomizedResponse<>(e.getMessage(), null);
             return new ResponseEntity<>(
                     customizedResponse,
                     HttpStatus.UNAUTHORIZED

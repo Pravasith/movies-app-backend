@@ -66,6 +66,11 @@ public class UserService implements UserDetailsService
 
         final UserModel databaseUser = mongoTemplate.findOne(query, UserModel.class);
 
+        if(databaseUser == null)
+        {
+            throw new Exception("User not found");
+        }
+
         boolean isPasswordRight = bCryptPasswordEncoder.matches(password, databaseUser.getPassword());
 
 
