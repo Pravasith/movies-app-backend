@@ -57,12 +57,41 @@ public class UserController
         value = "/users",
         consumes = { MediaType.APPLICATION_JSON_VALUE }
     )
-    ResponseEntity<CustomizedResponse<UserModel>> addUser(@RequestBody UserModel userModel)
+    ResponseEntity<CustomizedResponse<UserModel>> addUser(@RequestBody UserModel user)
     {
-        userService.addUser(userModel);
+        userService.addUser(user);
         return new ResponseEntity<>(
-                new CustomizedResponse<>("201: User added successfully", userModel),
+                new CustomizedResponse<>("201: User added successfully", user),
                 HttpStatus.CREATED
+        );
+    }
+
+    @PostMapping(
+            value = "/users/auth",
+            consumes = {MediaType.APPLICATION_JSON_VALUE}
+    )
+    ResponseEntity<CustomizedResponse<UserModel>> authUser (@RequestBody UserModel user) {
+
+        CustomizedResponse<UserModel> customizedResponse = null;
+
+        try
+        {
+            customizedResponse = new CustomizedResponse<>(
+                    "200: Fetched User successfully",
+                    userService.authUser(user.getEmail(), user.getPassword()));
+        }
+        catch (Exception e)
+        {
+            customizedResponse = new CustomizedResponse<>("401: " + e.getMessage(), null);
+            return new ResponseEntity<>(
+                    customizedResponse,
+                    HttpStatus.UNAUTHORIZED
+            );
+        }
+
+        return new ResponseEntity<>(
+                customizedResponse,
+                HttpStatus.OK
         );
     }
 }

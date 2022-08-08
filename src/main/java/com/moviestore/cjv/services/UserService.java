@@ -1,9 +1,14 @@
 package com.moviestore.cjv.services;
 
 
+import com.moviestore.cjv.models.media.Media;
 import com.moviestore.cjv.models.users.UserModel;
 import com.moviestore.cjv.models.users.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -18,6 +23,9 @@ public class UserService implements UserDetailsService
 {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -43,6 +51,34 @@ public class UserService implements UserDetailsService
         user.setPassword(encodedPassword);
 
         return userRepository.insert(user);
+    }
+
+    public UserModel authUser(String email, String password) throws Exception
+    {
+
+        Query query = new Query();
+        query.addCriteria(
+                Criteria
+                        .where("email")
+                        .is(email)
+
+        );
+
+        final UserModel databaseUser = mongoTemplate.findOne(query, UserModel.class);
+
+        boolean isPasswordRight = bCryptPasswordEncoder.matches(password, databaseUser.getPassword());
+
+
+        if(!isPasswordRight)
+        {
+            throw new Exception("Oops, password wasn't right!");
+        }
+
+        else
+        {
+            databaseUser.setPassword(null);
+            return new UserModel(databaseUser.getFirstName(), databaseUser.getLastName(), databaseUser.getEmail());
+        }
     }
 
     @Override
