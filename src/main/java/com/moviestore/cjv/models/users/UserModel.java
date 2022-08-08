@@ -28,10 +28,15 @@ public class UserModel
 
     public UserModel(String firstName, String lastName, String email)
     {
-
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+    }
+
+    public UserModel(String email, String password)
+    {
+        this.email = email;
+        this.password = password;
     }
 
     public String getFirstName() {
